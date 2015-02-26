@@ -25,7 +25,7 @@ proto_n2n_setup() {
                 exit 1
         }
 
-        proto_run_command "$cfg" /usr/sbin/edge -f -d "$device" -l "${server}:${port}" -a "${mode}:${ipaddr}" -s "$netmask" -c "$community" $([ -n "$key" ] && echo -k $key) $([ -n "$mac" ] && echo -m $mac) $([ -n "$mtu" ] && echo -M $mtu) $([ -n "$forwarding" ] && echo -r)
+        proto_run_command "$cfg" /usr/sbin/edge -f -d "$device" -l "${server}:${port}" -a "${mode}:${ipaddr}" -s "$netmask" -c "$community" $([ -n "$key" ] && echo -k $key) $([ -n "$mac" ] && echo -m $mac) $([ -n "$mtu" ] && echo -M $mtu) $([ "$forwarding" = 1 ] && echo -r)
 
         proto_init_update "$device" 1 1
         proto_set_keep 1
