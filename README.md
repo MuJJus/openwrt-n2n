@@ -3,8 +3,8 @@ The `n2n` protocol options:
 
 Name          | Type    | Required | Default | Description
 --------------|---------|----------|---------|------------------------------------------------
-supernodehost | string  | yes      | (none)  | Supernode server
-supernodeport | int     | yes      | (none)  | Supernode port
+server        | string  | yes      | (none)  | Supernode server
+port          | int     | yes      | (none)  | Supernode port
 community     | string  | yes      | (none)  | N2N community
 key           | string  | no       | (none)  | The key of the community
 mode          | string  | yes      | (none)  | For dhcp or static
