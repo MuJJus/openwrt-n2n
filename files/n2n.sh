@@ -9,8 +9,8 @@
 proto_n2n_setup() {
         local cfg="$1"
         local device="n2n-$cfg"
-        local supernodehost supernodeport mode ipaddr netmask mac mtu community key forwarding ip6addr ip6prefixlen
-        json_get_vars supernodehost supernodeport mode ipaddr netmask mac mtu community key forwarding ip6addr ip6prefixlen
+        local supernodehost supernodeport mode ipaddr netmask gateway mac mtu community key forwarding ip6addr ip6prefixlen ip6gw
+        json_get_vars supernodehost supernodeport mode ipaddr netmask gateway mac mtu community key forwarding ip6addr ip6prefixlen ip6gw
 
         [ -n "$supernodehost" ] && {
                 for ip in $(resolveip -t 5 "$supernodehost"); do
@@ -30,11 +30,22 @@ proto_n2n_setup() {
         proto_init_update "$device" 1 1
         proto_set_keep 1
         sleep 1
+
         proto_add_ipv4_address "$ipaddr" "$netmask"
+
         if [ -n "$ip6addr" ] && [ -n "$ip6prefixlen" ]; then
                 ifconfig "$device" "${ip6addr}/${ip6prefixlen}"
                 proto_add_ipv6_address "$ip6addr" "$ip6prefixlen"
         fi
+
+        [ -n "$gateway" ] && {
+                proto_add_ipv4_route 0.0.0.0 0 "$gateway"
+        }
+
+        [ -n "$ip6gw" ] && {
+                proto_add_ipv6_route "::" 0 "$ip6gw"
+        }
+
         proto_send_update "$cfg"
 }
 
@@ -56,6 +67,7 @@ proto_n2n_init_config() {
         proto_config_add_string "mode"
         proto_config_add_string "ipaddr"
         proto_config_add_string "netmask"
+        proto_config_add_string "gateway"
         proto_config_add_string "mac"
         proto_config_add_int "mtu"
         proto_config_add_string "community"
@@ -63,6 +75,7 @@ proto_n2n_init_config() {
         proto_config_add_boolean "forwarding"
         proto_config_add_string "ip6addr"
         proto_config_add_int "ip6prefixlen"
+        proto_config_add_string "ip6gw"
 }
 
 [ -n "$INCLUDE_ONLY" ] || {
