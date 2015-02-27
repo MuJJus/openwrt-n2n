@@ -9,8 +9,8 @@
 proto_n2n_setup() {
         local cfg="$1"
         local device="n2n-$cfg"
-        local server port mode ipaddr netmask gateway mac mtu community key forwarding ip6addr ip6prefixlen ip6gw
-        json_get_vars server port mode ipaddr netmask gateway mac mtu community key forwarding ip6addr ip6prefixlen ip6gw
+        local server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw
+        json_get_vars server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw
 
         [ -n "$server" ] && {
                 for ip in $(resolveip -t 5 "$server"); do
@@ -25,7 +25,7 @@ proto_n2n_setup() {
                 exit 1
         }
 
-        proto_run_command "$cfg" /usr/sbin/edge -f -d "$device" -l "${server}:${port}" -a "${mode}:${ipaddr}" -s "$netmask" -c "$community" $([ -n "$key" ] && echo -k $key) $([ -n "$mac" ] && echo -m $mac) $([ -n "$mtu" ] && echo -M $mtu) $([ "$forwarding" = 1 ] && echo -r)
+        proto_run_command "$cfg" /usr/sbin/edge -f -d "$device" -l "${server}:${port}" -a "${mode}:${ipaddr}" -s "$netmask" -c "$community" $([ -n "$key" ] && echo -k $key) $([ -n "$macaddr" ] && echo -m $macaddr) $([ -n "$mtu" ] && echo -M $mtu) $([ "$forwarding" = 1 ] && echo -r)
 
         proto_init_update "$device" 1 1
         proto_set_keep 1
@@ -68,7 +68,7 @@ proto_n2n_init_config() {
         proto_config_add_string "ipaddr"
         proto_config_add_string "netmask"
         proto_config_add_string "gateway"
-        proto_config_add_string "mac"
+        proto_config_add_string "macaddr"
         proto_config_add_int "mtu"
         proto_config_add_string "community"
         proto_config_add_string "key"
