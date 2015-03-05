@@ -9,8 +9,8 @@
 proto_n2n_setup() {
         local cfg="$1"
         local device="n2n-$cfg"
-        local server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic
-        json_get_vars server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic
+        local server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
+        json_get_vars server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
 
         [ -n "$server" ] && {
                 for ip in $(resolveip -t 5 "$server"); do
@@ -25,7 +25,21 @@ proto_n2n_setup() {
                 exit 1
         }
 
-        proto_run_command "$cfg" /usr/sbin/edge -f -d "$device" -l "${server}:${port}" -a "${mode}:${ipaddr}" -s "$netmask" -c "$community" $([ -n "$key" ] && echo -k $key) $([ -n "$macaddr" ] && echo -m $macaddr) $([ -n "$mtu" ] && echo -M $mtu) $([ "$forwarding" = 1 ] && echo -r) $([ "$dynamic" = 1 ] && echo -b)
+        proto_run_command "$cfg" /usr/sbin/edge -f \
+                          -d "$device" \
+                          -l "${server}:${port}" \
+                          -a "${mode}:${ipaddr=0.0.0.0}" \
+                          $([ -n "$netmask" ] && echo -s $netmask) \
+                          -c "$community" \
+                          $([ -n "$key" ] && echo -k $key) \
+                          $([ -n "$macaddr" ] && echo -m $macaddr) \
+                          $([ -n "$mtu" ] && echo -M $mtu) \
+                          $([ "$forwarding" = 1 ] && echo -r) \
+                          $([ "$dynamic" = 1 ] && echo -b) \
+                          $([ -n "$localport" ] && echo -p $localport) \
+                          $([ -n "$mgmtport" ] && echo -t $mgmtport) \
+                          $([ "$multicast" = 1 ] && echo -E) \
+                          $([ "$verbose" = 1 ] && echo -v)
 
         proto_init_update "$device" 1 1
         proto_set_keep 1
@@ -77,6 +91,10 @@ proto_n2n_init_config() {
         proto_config_add_int "ip6prefixlen"
         proto_config_add_string "ip6gw"
         proto_config_add_boolean "dynamic"
+        proto_config_add_int "localport"
+        proto_config_add_int "mgmtport"
+        proto_config_add_boolean "multicast"
+        proto_config_add_boolean "verbose"
 }
 
 [ -n "$INCLUDE_ONLY" ] || {
