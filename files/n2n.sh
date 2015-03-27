@@ -69,6 +69,7 @@ proto_n2n_teardown() {
 
         proto_init_update "$device" 0
         proto_kill_command "$1"
+        kill -SIGKILL `cat /var/run/${device}.pid`
         proto_send_update "$cfg"
 }
 
