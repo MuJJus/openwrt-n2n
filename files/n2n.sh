@@ -9,11 +9,17 @@
 proto_n2n_setup() {
         local cfg="$1"
         local device="n2n-$cfg"
-        local server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
-        json_get_vars server port mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
+        local server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
+        json_get_vars server port server2 port2 mode ipaddr netmask gateway macaddr mtu community key forwarding ip6addr ip6prefixlen ip6gw dynamic localport mgmtport multicast verbose
 
         [ -n "$server" ] && {
                 for ip in $(resolveip -t 5 "$server"); do
+                        ( proto_add_host_dependency "$cfg" "$ip" )
+                        serv_addr=1
+                done
+        }
+        [ -n "$server2" ] && {
+                for ip in $(resolveip -t 5 "$server2"); do
                         ( proto_add_host_dependency "$cfg" "$ip" )
                         serv_addr=1
                 done
@@ -28,6 +34,7 @@ proto_n2n_setup() {
         proto_run_command "$cfg" /usr/sbin/edge -f \
                           -d "$device" \
                           -l "${server}:${port}" \
+                          $([ -n "$server2" -a -n "$port2" ] && echo -l "${server2}:${port2}") \
                           -a "${mode}:${ipaddr=0.0.0.0}" \
                           $([ -n "$netmask" ] && echo -s $netmask) \
                           -c "$community" \
@@ -69,7 +76,7 @@ proto_n2n_teardown() {
 
         proto_init_update "$device" 0
         proto_kill_command "$1"
-        kill -SIGKILL `cat /var/run/${device}.pid`
+        kill -SIGKILL `cat /var/run/${device}.pid` >/dev/null 2>&1
         proto_send_update "$cfg"
 }
 
@@ -79,6 +86,8 @@ proto_n2n_init_config() {
 
         proto_config_add_string "server"
         proto_config_add_int "port"
+        proto_config_add_string "server2"
+        proto_config_add_int "port2"
         proto_config_add_string "mode"
         proto_config_add_string "ipaddr"
         proto_config_add_string "netmask"

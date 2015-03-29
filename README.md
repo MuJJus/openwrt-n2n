@@ -5,6 +5,8 @@ Name          | Type    | Required | Default | Description
 --------------|---------|----------|---------|------------------------------------------------
 server        | string  | yes      | (none)  | Supernode server
 port          | int     | yes      | (none)  | Supernode port
+server2       | string  | no       | (none)  | Supernode server of slave
+port2         | int     | no       | (none)  | Supernode port of slave
 community     | string  | yes      | (none)  | N2N community
 key           | string  | no       | (none)  | The key of the community
 mode          | string  | yes      | (none)  | For dhcp or static
