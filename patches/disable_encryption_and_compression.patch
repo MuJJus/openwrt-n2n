@@ -1,0 +1,24 @@
+--- a/Makefile	2015-10-10 04:29:24.557383925 +0000
++++ b/Makefile	2015-10-10 04:32:20.233434076 +0000
+@@ -17,8 +17,8 @@
+ N2N_OBJS_OPT=
+ LIBS_EDGE_OPT=
+ 
+-N2N_OPTION_AES?="yes"
+-#N2N_OPTION_AES=no
++#N2N_OPTION_AES?="yes"
++N2N_OPTION_AES=no
+ 
+ ifeq ($(N2N_OPTION_AES), "yes")
+     N2N_DEFINES+="-DN2N_HAVE_AES"
+--- a/n2n.h	2015-10-10 04:29:24.545383901 +0000
++++ b/n2n.h	2015-10-10 04:33:02.625369926 +0000
+@@ -155,7 +155,7 @@
+  * frames. Doing this will break compatibility with the standard n2n packet
+  * format so do it only for experimentation. All edges must be built with the
+  * same value if they are to understand each other. */
+-#define N2N_COMPRESSION_ENABLED 1
++#define N2N_COMPRESSION_ENABLED 0
+ 
+ #define DEFAULT_MTU   1400
+ 
