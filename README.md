@@ -24,3 +24,6 @@ localport     | int     | no       | random  | Fixed local UDP port
 mgmtport      | int     | no       | (none)  | Management UDP Port (for multiple edges on a machine)
 multicast     | boolean | no       | false   | Accept multicast MAC addresses
 verbose       | boolean | no       | false   | Make more verbose
+
+# LuCI
+* edge [luci-proto-n2n](/MuJJus/luci-proto-n2n)
