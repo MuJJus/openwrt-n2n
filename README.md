@@ -17,7 +17,7 @@ ip6addr       | string  | no       | (none)  | IPv6 Address of the interface
 ip6prefixlen  | int     | no       | (none)  | IPv6 Prefix Length of the interface
 ip6gw         | string  | no       | (none)  | IPv6 Gateway of the interface
 macaddr       | string  | no       | random  | MAC Address
-mtu           | int     | no       | 1400    | Maximum Transmit Unit
+mtu           | int     | no       | 1440    | Maximum Transmit Unit
 forwarding    | boolean | no       | false   | Enable packet forwarding through n2n community
 dynamic       | boolean | no       | false   | Periodically resolve supernode IP
 localport     | int     | no       | random  | Fixed local UDP port
