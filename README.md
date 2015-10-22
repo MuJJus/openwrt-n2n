@@ -26,4 +26,5 @@ multicast     | boolean | no       | false   | Accept multicast MAC addresses
 verbose       | boolean | no       | false   | Make more verbose
 
 # LuCI
-* edge [luci-proto-n2n](/MuJJus/luci-proto-n2n)
+* edge [luci-proto-n2n](https://github.com/MuJJus/luci-proto-n2n)
+* supernode [luci-app-n2n](https://github.com/MuJJus/luci-app-n2n)
