@@ -29,6 +29,16 @@ mgmtport      | int     | no       | (none)  | Management UDP Port (for multiple
 multicast     | boolean | no       | false   | Accept multicast MAC addresses
 verbose       | boolean | no       | false   | Make more verbose
 
+For supernode
+```
+# vi /etc/config/n2n
+config supernode
+        option enable '1'
+        option port '80'
+
+# /etc/init.d/n2n start
+```
+
 # LuCI
 * edge [luci-proto-n2n](https://github.com/MuJJus/luci-proto-n2n)
 * supernode [luci-app-n2n](https://github.com/MuJJus/luci-app-n2n)
