@@ -24,21 +24,19 @@ define Package/n2n/Default
   TITLE:=N2N VPN tunneling daemon(V2)
   URL:=http://www.ntop.org/n2n/
   SUBMENU:=VPN
-  DEPENDS:=+libpthread +kmod-tun +libopenssl +resolveip
+  DEPENDS:=+kmod-tun +resolveip
 endef
 
 define Package/n2n-edge
 $(call Package/n2n/Default)
-  VARIANT:=edge
 endef
 
 define Package/n2n-supernode
 $(call Package/n2n/Default)
-  VARIANT:=supernode
 endef
 
 define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR) \
+		$(MAKE) -C $(PKG_BUILD_DIR) \
 		$(TARGET_CONFIGURE_OPTS) \
 		CFLAGS="$(TARGET_CFLAGS)" \
 		INSTALL_PROG=":"
