@@ -2,7 +2,20 @@
 n2n Mod for MuJJnet project written by [Jason Tse](https://github.com/MuJJus) running on OpenWrt.  
 forked from [original code](https://svn.ntop.org/svn/ntop/trunk/n2n/n2n_v2)
 
-# Usage
+## Build
+Example for ar71xx and trunk.
+```
+wget http://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/OpenWrt-SDK-ar71xx-generic_gcc-4.8-linaro_musl-1.1.11.Linux-x86_64.tar.bz2
+tar jxf OpenWrt-SDK-ar71xx-generic_gcc-4.8-linaro_musl-1.1.11.Linux-x86_64.tar.bz2
+cd OpenWrt-SDK-ar71xx-generic_gcc-4.8-linaro_musl-1.1.11.Linux-x86_64/package
+git clone https://github.com/MuJJus/openwrt-n2n n2n
+cd ..
+make menuconfig # (selected Network -> VPN -> n2n-edge and n2n-supernode)
+make package/n2n/compile V=s
+```
+
+
+## Usage
 The `n2n` protocol options:
 
 Name          | Type    | Required | Default | Description
@@ -39,6 +52,6 @@ config supernode
 # /etc/init.d/n2n start
 ```
 
-# LuCI
+## LuCI
 * edge [luci-proto-n2n](https://github.com/MuJJus/luci-proto-n2n)
 * supernode [luci-app-n2n](https://github.com/MuJJus/luci-app-n2n)
