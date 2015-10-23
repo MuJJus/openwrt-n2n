@@ -1,6 +1,6 @@
 # openwrt-n2n
-n2n Mod for MuJJnet written by [Jason Tse](https://github.com/MuJJus) running on OpenWrt.  
-fork by [original code](https://svn.ntop.org/svn/ntop/trunk/n2n/n2n_v2)
+n2n Mod for MuJJnet project written by [Jason Tse](https://github.com/MuJJus) running on OpenWrt.  
+forked from [original code](https://svn.ntop.org/svn/ntop/trunk/n2n/n2n_v2)
 
 # Usage
 The `n2n` protocol options:
