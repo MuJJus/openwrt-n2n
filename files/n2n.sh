@@ -55,7 +55,6 @@ proto_n2n_setup() {
         proto_add_ipv4_address "$ipaddr" "$netmask"
 
         if [ -n "$ip6addr" ] && [ -n "$ip6prefixlen" ]; then
-                proto_add_ipv6_prefix "${ip6addr}/${ip6prefixlen}"
                 ifconfig "$device" "${ip6addr}/${ip6prefixlen}"
                 proto_add_ipv6_address "$ip6addr" "$ip6prefixlen"
         fi
